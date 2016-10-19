@@ -22,7 +22,7 @@ COMPC = make -C $(LIBFT) clean
 
 COMPF = make -C $(LIBFT) fclean
 
-NAME =	fillit
+NAME =	get_next_line
 
 SRCS =	$(LIBFT)libft.a \
 		get_next_line.c \
