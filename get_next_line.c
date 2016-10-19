@@ -51,7 +51,7 @@ static int		check_the_line(char **line, char *str, char **start,
 
 int				get_next_line(const int fd, char **line)
 {
-	static char 	*start = NULL;
+	static char 	*start[1024] = {0};
 	char			buff[BUFF_SIZE + 1];
 	unsigned int	count;
 	int				ret;
@@ -59,15 +59,15 @@ int				get_next_line(const int fd, char **line)
 	count = 0;
 	if (fd < 0)
 		return (-1);
-	// if (line == NULL || *line == NULL)
-	// 	return (-1);
-	if (start)
-		if (check_the_line(line, start, &start, &count))
+	if (line == NULL || *line == NULL)
+		return (-1);
+	if (start[fd])
+		if (check_the_line(line, start[fd], &start[fd], &count))
 			return (1);
 	while ((ret = read(fd, buff, BUFF_SIZE)))
 	{
 		buff[ret] = '\0';
-		if (check_the_line(line, buff, &start, &count))
+		if (check_the_line(line, buff, &start[fd], &count))
 			return (1);
 	}
 	return (0);
