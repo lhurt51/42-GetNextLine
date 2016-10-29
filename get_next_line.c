@@ -32,16 +32,8 @@ static int		check_the_line(char **line, char *str, char **start,
 	{
 		*tmp = '\0';
 		tmp++;
-		if (start)
-		{
-			*line = store(line, str, *count);
-			*start = ft_strdup(tmp);
-		}
-		else
-		{
-			*start = ft_strdup(tmp);
-			*line = store(line, str, *count);
-		}
+		*line = store(line, str, *count);
+		*start = ft_strdup(tmp);
 		return (1);
 	}
 	*line = store(line, str, *count);
@@ -51,15 +43,13 @@ static int		check_the_line(char **line, char *str, char **start,
 
 int				get_next_line(const int fd, char **line)
 {
-	static char 	*start[1024] = {0};
+	static char		*start[1024] = {0};
 	char			buff[BUFF_SIZE + 1];
 	unsigned int	count;
 	int				ret;
 
 	count = 0;
-	if (fd < 0)
-		return (-1);
-	if (line == NULL || *line == NULL)
+	if (fd < 0 || line == NULL || (-1 == read(fd, buff, 0)))
 		return (-1);
 	if (start[fd])
 		if (check_the_line(line, start[fd], &start[fd], &count))
@@ -70,5 +60,11 @@ int				get_next_line(const int fd, char **line)
 		if (check_the_line(line, buff, &start[fd], &count))
 			return (1);
 	}
+	if (ret == 0 && (!start[fd] || ft_strlen(start[fd]) > 0))
+	{
+		start[fd] = "\0";
+		return (1);
+	}
+	*line = "\0";
 	return (0);
 }
