@@ -18,13 +18,9 @@
 
 # define BUFF_SIZE 32
 
-void	ft_putchar(char c);
-void	ft_putnbr(int nb);
 void	ft_putendl(char const *s);
 char	*ft_strnew(size_t size);
 size_t	ft_strlen(const char *s);
-void	ft_memdel(void **ap);
-void	ft_strdel(char **as);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
